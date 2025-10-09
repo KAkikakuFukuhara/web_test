@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block context %}
+<div class="container">
+    <form id="form" action="/api/post-test" method="post" target="_blank">
+        <div>
+            <input type="radio" name="radio" value="radio01">
+            <label>radio</label>
+        </div>
+        <div>
+            <label>text>></label>
+            <input type="text" name="text">
+        </div>
+        <button id="submit-button" type="button" class="btn btn-primary">submi</button>
+    </form>
+</div>
+<script src="{{ url_for('static', path='/javascript/post-test.js') }}"></script>
+{% endblock %}

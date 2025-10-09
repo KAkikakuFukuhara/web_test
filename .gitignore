@@ -1,0 +1,20 @@
+# python
+
+## native
+__pycache__
+
+## venv
+.venv
+
+## pyenv
+.python-version
+
+## poetry
+poetry.lock
+
+# ignore
+*.db
+
+# exception
+
+# ignore after exception
