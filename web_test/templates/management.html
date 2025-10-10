@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block context %}
+<div class="container">
+    <h1>管理者画面</h1>
+    <div class="d-grid gap-2">
+        <a href="/management/add_robot" class="btn btn-primary">新規ロボット登録</a>
+        <a href="/management/update_robot" class="btn btn-primary">ロボット情報編集</a>
+    </div>
+</div>
+{% endblock %}

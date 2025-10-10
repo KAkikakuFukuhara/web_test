@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block context %}
+<div class="container">
+    <h1>新規ロボット追加</h1>
+    <div class="card">
+        <div class="card-body">
+            <form id="form" action="/api/robots">
+                <div>
+                    <label>ロボットの名前</label>
+                    <input type="text" name="name">
+                </div>
+                <button id="submit-button" type="button" class="btn btn-primary">submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', path='/javascript/add_robot.js') }}"></script>
+{% endblock %}

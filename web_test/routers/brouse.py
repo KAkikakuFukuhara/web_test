@@ -50,3 +50,18 @@ async def read_post(request: Request):
     return templates.TemplateResponse("post-test.html", context)
 
 
+@router.get("/management", response_class=HTMLResponse)
+async def read_management(request: Request):
+    return templates.TemplateResponse(request, "management.html")
+
+
+@router.get("/management/add_robot", response_class=HTMLResponse)
+async def read_add_robot(request: Request):
+    return templates.TemplateResponse(request, "managements/add_robot.html")
+
+
+@router.get("/management/update_robot", response_class=HTMLResponse)
+async def read_update_robot(request: Request):
+    return templates.TemplateResponse(request, "managements/update_robot.html")
+
+
