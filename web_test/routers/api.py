@@ -12,6 +12,12 @@ from ..models import robot as robot_model
 
 router = APIRouter()
 
+
+@router.get("/api/hello")
+async def hello():
+    return {"message": "hello worlds!"}
+
+
 @router.post("/api/post-test")
 async def post_test(
         post_test: PostTest):
