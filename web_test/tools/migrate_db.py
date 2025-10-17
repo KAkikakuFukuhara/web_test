@@ -5,6 +5,7 @@ from sqlalchemy import Engine
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from web_test.db import engine, Base
+from web_test.models import robot, task
 
 
 def reset_database():

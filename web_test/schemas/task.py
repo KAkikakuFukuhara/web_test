@@ -1,8 +1,21 @@
-from typing import List
-
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
-class Task(BaseModel):
-    task_list: List[int]
-    dones: List[int]
+class TaskBase(BaseModel):
+    done: bool = False
+
+
+class TaskCreate(TaskBase):
+    lane_number: int
+    robot_id: int = Field(ge=1)
+
+
+class TaskUpdate(TaskBase):
+    pass
+
+
+class Task(TaskBase):
+    id: int
+    robot_id: int
+    lane_number: int
+

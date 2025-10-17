@@ -9,6 +9,10 @@ from ..db import get_db
 from ..schemas import robot as robot_schema
 from ..cruds import robot as robot_crud
 from ..models import robot as robot_model
+from ..schemas import task as task_schema
+from ..cruds import task as task_crud
+from ..models import task as task_model
+
 
 router = APIRouter()
 
@@ -68,3 +72,70 @@ async def delete_robot(
         raise HTTPException(status_code=404, detail="robot not found")
 
     return await robot_crud.delete_robot(db, robot)
+
+
+@router.get("/api/robots/{robot_id:int}/tasks", response_model=List[task_schema.Task])
+async def get_robot_tasks(
+        robot_id: int,
+        db: AsyncSession = Depends(get_db)
+    ):
+    robot = await robot_crud.get_robot(db, robot_id)
+    if robot is None:
+        raise HTTPException(status_code=404, detail="robot not found")
+
+    return robot.tasks
+
+
+@router.get("/api/tasks", response_model=List[task_schema.Task])
+async def get_tasks(db: AsyncSession = Depends(get_db)):
+    tasks = await task_crud.get_tasks(db)
+    return tasks
+
+
+@router.post("/api/tasks", response_model=task_schema.Task)
+async def add_task(
+        task_create: task_schema.TaskCreate,
+        db: AsyncSession = Depends(get_db)):
+    robot = await robot_crud.get_robot(db, task_create.robot_id)
+    if robot is None:
+        raise HTTPException(status_code=404, detail="robot not found")
+
+    task: task_model.Task = await task_crud.add_task(db, robot, task_create)
+    return task
+
+
+@router.get("/api/tasks/{task_id:int}", response_model=task_schema.Task)
+async def get_task(
+        task_id: int,
+        db: AsyncSession = Depends(get_db)
+    ):
+    task = await task_crud.get_task(db, task_id)
+    if task is None:
+        raise HTTPException(status_code=404, detail="task not found")
+
+    return task
+
+
+@router.delete("/api/tasks/{task_id:int}")
+async def delete_task(
+        task_id: int,
+        db: AsyncSession = Depends(get_db)
+    ):
+    task = await task_crud.get_task(db, task_id)
+    if task is None:
+        raise HTTPException(status_code=404, detail="task not found")
+
+    return await task_crud.delete_task(db, task)
+
+
+@router.put("/api/tasks/{task_id:int}", response_model=task_schema.Task)
+async def update_done(
+        task_id: int,
+        task_update: task_schema.TaskUpdate,
+        db: AsyncSession = Depends(get_db)
+    ):
+    task = await task_crud.get_task(db, task_id)
+    if task is None:
+        raise HTTPException(status_code=404, detail="task not found")
+
+    return await task_crud.update_done(db, task, task_update)
