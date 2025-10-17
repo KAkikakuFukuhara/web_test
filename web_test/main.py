@@ -6,7 +6,6 @@ import uvicorn
 
 from web_test.routers import brouse, api
 
-
 ## グローバル変数にしないと`reload`が実行されない。
 app = FastAPI()
 app.mount(path="/static", app=StaticFiles(directory="web_test/static"), name="static")
